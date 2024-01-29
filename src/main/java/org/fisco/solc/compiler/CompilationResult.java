@@ -49,6 +49,8 @@ public class CompilationResult {
                 abiObject.addProperty("abi", contractJsonObject.get("abi").toString());
                 abiObject.addProperty("bin", contractJsonObject.get("bin").getAsString());
                 abiObject.addProperty("metadata", contractJsonObject.get("metadata").getAsString());
+                abiObject.addProperty("userdoc", contractJsonObject.get("userdoc").toString());
+                abiObject.addProperty("devdoc", contractJsonObject.get("devdoc").toString());
                 contractObject.add(contract.toString(), abiObject);
             }
             result.add("contracts", contractObject);
@@ -103,6 +105,8 @@ public class CompilationResult {
         public String abi;
         public String bin;
         public String metadata;
+        public String userdoc;
+        public String devdoc;
 
         @Override
         public String toString() {

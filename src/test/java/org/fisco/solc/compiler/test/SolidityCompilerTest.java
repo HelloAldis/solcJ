@@ -2,7 +2,9 @@ package org.fisco.solc.compiler.test;
 
 import static org.fisco.solc.compiler.SolidityCompiler.Options.ABI;
 import static org.fisco.solc.compiler.SolidityCompiler.Options.BIN;
+import static org.fisco.solc.compiler.SolidityCompiler.Options.DEVDOC;
 import static org.fisco.solc.compiler.SolidityCompiler.Options.METADATA;
+import static org.fisco.solc.compiler.SolidityCompiler.Options.USERDOC;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -80,6 +82,72 @@ public class SolidityCompilerTest {
             assertTrue(
                     "ABI empty, compile error: " + result.getErrors(),
                     !("".equals(assetContractMetadata0.abi)));
+        } catch (IOException e) {
+            assertTrue("compile solidity failed, error: " + e.getMessage(), false);
+        }
+    }
+
+    @Test
+    public void docTest() {
+        try {
+            URL url =
+                    SolidityCompilerTest.class
+                            .getClassLoader()
+                            .getSystemResource("solidity/IERC721.sol");
+            File file = new File(url.getFile());
+            Result result =
+                    SolidityCompiler.compile(file, true, true, ABI, BIN, METADATA, USERDOC, DEVDOC);
+            assertTrue(
+                    "compile solidity failed, solidity error: " + result.getErrors(),
+                    !result.isFailed());
+            CompilationResult compilationResult = CompilationResult.parse(result.getOutput());
+            CompilationResult.ContractMetadata assetContractMetadata =
+                    compilationResult.getContract("IERC721");
+            assertTrue(
+                    "BIN NOT empty, compile error: " + result.getErrors(),
+                    ("".equals(assetContractMetadata.bin)));
+            assertTrue(
+                    "ABI empty, compile error: " + result.getErrors(),
+                    !("".equals(assetContractMetadata.abi)));
+            assertTrue(
+                    "User doc empty, compile error: " + result.getErrors(),
+                    !("".equals(assetContractMetadata.abi)));
+            assertTrue(
+                    "Dev doc empty, compile error: " + result.getErrors(),
+                    !("".equals(assetContractMetadata.abi)));
+        } catch (IOException e) {
+            assertTrue("compile solidity failed, error: " + e.getMessage(), false);
+        }
+    }
+
+    @Test
+    public void weCossProxyContractTest() {
+        try {
+            URL url =
+                    SolidityCompilerTest.class
+                            .getClassLoader()
+                            .getSystemResource("solidity/WeCrossProxy.sol");
+            File file = new File(url.getFile());
+            Result result =
+                    SolidityCompiler.compile(file, true, true, ABI, BIN, METADATA, USERDOC, DEVDOC);
+            assertTrue(
+                    "compile solidity failed, solidity error: " + result.getErrors(),
+                    !result.isFailed());
+            CompilationResult compilationResult = CompilationResult.parse(result.getOutput());
+            CompilationResult.ContractMetadata assetContractMetadata =
+                    compilationResult.getContract("WeCrossProxy");
+            assertTrue(
+                    "BIN empty, compile error: " + result.getErrors(),
+                    !("".equals(assetContractMetadata.bin)));
+            assertTrue(
+                    "ABI empty, compile error: " + result.getErrors(),
+                    !("".equals(assetContractMetadata.abi)));
+            assertTrue(
+                    "User doc empty, compile error: " + result.getErrors(),
+                    !("".equals(assetContractMetadata.abi)));
+            assertTrue(
+                    "Dev doc empty, compile error: " + result.getErrors(),
+                    !("".equals(assetContractMetadata.abi)));
         } catch (IOException e) {
             assertTrue("compile solidity failed, error: " + e.getMessage(), false);
         }
