@@ -48,14 +48,17 @@ public class CompilationResult {
                 JsonObject abiObject = new JsonObject();
                 abiObject.addProperty("abi", getJsonValueAsString(contractJsonObject, "abi"));
                 abiObject.addProperty("bin", getJsonValueAsString(contractJsonObject, "bin"));
-                abiObject.addProperty("metadata", getJsonValueAsString(contractJsonObject, "metadata"));
+                abiObject.addProperty(
+                        "metadata", getJsonValueAsString(contractJsonObject, "metadata"));
 
                 if (contractJsonObject.get("userdoc") != null) {
-                    abiObject.addProperty("userdoc", getJsonValueAsString(contractJsonObject, "userdoc"));
+                    abiObject.addProperty(
+                            "userdoc", getJsonValueAsString(contractJsonObject, "userdoc"));
                 }
 
                 if (contractJsonObject.get("devdoc") != null) {
-                    abiObject.addProperty("devdoc", getJsonValueAsString(contractJsonObject, "devdoc"));
+                    abiObject.addProperty(
+                            "devdoc", getJsonValueAsString(contractJsonObject, "devdoc"));
                 }
                 contractObject.add(contract.toString(), abiObject);
             }
